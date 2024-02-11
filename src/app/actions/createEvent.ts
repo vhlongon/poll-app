@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@/db/db';
-import { events } from '@/db/schema';
+import { events, timeSuggestions } from '@/db/schema';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { v4 as uuidV4 } from 'uuid';
@@ -10,15 +10,23 @@ import { z } from 'zod';
 const schema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
   dates: z
-    .array(
-      z
-        .string()
-        .refine(value => !isNaN(Date.parse(value)), {
-          message: 'Invalid date format',
-        })
-        .transform(str => new Date(str))
+
+    .string()
+    .refine(
+      value => {
+        const dates = value.split(',');
+        const isValid = dates.every(date => {
+          const dateObj = new Date(date);
+          return !isNaN(dateObj.getTime());
+        });
+
+        return isValid;
+      },
+      {
+        message: 'Invalid date format',
+      }
     )
-    .nonempty({ message: 'At least one date is required' }),
+    .transform(value => value.split(',')),
 });
 
 export type FormError = Partial<{
@@ -31,10 +39,7 @@ export const createEvent = async (
   prevState: FormError | undefined,
   formData: FormData
 ) => {
-  const validatedFields = schema.safeParse({
-    name: formData.get('name'),
-    dates: formData.getAll('dates'),
-  });
+  const validatedFields = schema.safeParse(Object.fromEntries(formData));
 
   if (!validatedFields.success) {
     const fieldErrors = validatedFields.error.flatten().fieldErrors;
@@ -47,11 +52,21 @@ export const createEvent = async (
 
   const eventId = uuidV4();
 
+  const { name, dates } = validatedFields.data;
+
   try {
     await db.insert(events).values({
       id: eventId,
-      name: validatedFields.data.name,
+      name: name,
     });
+
+    await db.insert(timeSuggestions).values(
+      dates.map(d => ({
+        eventId,
+        time: new Date(d).toISOString(),
+        author: 'anonymous', //TODO: add the author name
+      }))
+    );
   } catch (error) {
     console.log(error);
     return {
