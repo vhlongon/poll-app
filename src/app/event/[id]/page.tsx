@@ -1,6 +1,5 @@
 import { db } from '@/db/db';
 import { events, timeSuggestions } from '@/db/schema';
-import { eq } from 'drizzle-orm';
 
 type Event = typeof events.$inferSelect;
 type TimeSuggestion = typeof timeSuggestions.$inferSelect;
@@ -12,35 +11,18 @@ type AggrecatedData = Record<
 >;
 
 const getEventData = async (id: string) => {
-  const rows = await db
-    .select({
-      event: events,
-      timeSuggestion: timeSuggestions,
-    })
-    .from(events)
-    .where(eq(events.id, id))
-    .rightJoin(timeSuggestions, eq(timeSuggestions.eventId, id))
-    .all();
+  const result = await db.query.events.findFirst({
+    where: (events, { eq }) => eq(events.id, id),
+    with: {
+      timeSuggestions: true,
+    },
+  });
 
-  const result = rows.reduce<AggrecatedData>((acc, row) => {
-    const { event, timeSuggestion } = row;
+  if (!result) {
+    throw new Error('Event not found');
+  }
 
-    if (!event) {
-      return acc;
-    }
-
-    const { id } = event;
-
-    if (!acc[id]) {
-      acc[id] = { ...event, timeSuggestions: [] };
-    }
-    if (timeSuggestion) {
-      acc[id].timeSuggestions.push(timeSuggestion);
-    }
-    return acc;
-  }, {});
-
-  return result[id];
+  return result;
 };
 
 type EventPageProps = {
