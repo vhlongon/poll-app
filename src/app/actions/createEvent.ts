@@ -20,6 +20,7 @@ export const createEvent = async (
   const validatedFields = schema.safeParse({
     name: formData.get('name'),
   });
+  console.log('🚀 ', formData.get('dates'));
 
   if (!validatedFields.success) {
     const fieldErrors = validatedFields.error.flatten().fieldErrors;

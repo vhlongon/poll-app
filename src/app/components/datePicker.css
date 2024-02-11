@@ -1,0 +1,45 @@
+.rmdp-shadow {
+  box-shadow: none !important;
+}
+
+.rmdp-wrapper {
+  background-color: transparent !important;
+  @apply input-bordered;
+}
+.rmdp-calendar {
+  @apply card w-96 bg-base-100 shadow-2xl;
+}
+
+.rmdp-day-picker > div {
+  width: 100%;
+}
+
+.rmdp-ep-arrow[direction='top'] {
+  display: none !important;
+  border-bottom: none !important;
+}
+
+.rmdp-header-values {
+  color: oklch(var(--s)) !important;
+}
+.rmdp-week-day {
+  color: oklch(var(--p)) !important;
+}
+
+.rmdp-day {
+  color: oklch(var(--nc)) !important;
+}
+.rmdp-day.rmdp-disabled {
+  color: oklch(var(--n)) !important;
+}
+.rmdp-day span:hover {
+  background-color: oklch(var(--s) / 50%) !important;
+}
+
+.rmdp-day.rmdp-today span {
+  background-color: oklch(var(--s) / 50%) !important;
+}
+
+.rmdp-day.rmdp-selected span {
+  background-color: oklch(var(--s)) !important;
+}
