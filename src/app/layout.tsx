@@ -9,11 +9,11 @@ export const metadata: Metadata = {
   description: 'Create polls for your events',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+type HomPageProps = Readonly<{
   children: React.ReactNode;
-}>) {
+}>;
+
+export default function RootLayout({ children }: HomPageProps) {
   return (
     <html lang="en" data-theme="dark">
       <body className={inter.className}>{children}</body>
