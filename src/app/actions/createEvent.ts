@@ -7,10 +7,15 @@ import { z } from 'zod';
 
 const schema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
+  dates: z.array(z.string()),
 });
+
+type PossibleErrorKeys = keyof (typeof schema)['_def'];
 
 export type FormError = {
   error?: string;
+  name?: string;
+  dates?: string;
 };
 
 export const createEvent = async (
@@ -19,13 +24,14 @@ export const createEvent = async (
 ) => {
   const validatedFields = schema.safeParse({
     name: formData.get('name'),
+    dates: formData.getAll('dates'),
   });
-  console.log('🚀 ', formData.get('dates'));
 
   if (!validatedFields.success) {
     const fieldErrors = validatedFields.error.flatten().fieldErrors;
     return {
-      error: fieldErrors?.name?.join(','),
+      name: fieldErrors.name?.join(', '),
+      dates: fieldErrors.name?.join(', '),
     };
   }
 
