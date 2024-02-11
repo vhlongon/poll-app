@@ -1,14 +1,4 @@
 import { db } from '@/db/db';
-import { events, timeSuggestions } from '@/db/schema';
-
-type Event = typeof events.$inferSelect;
-type TimeSuggestion = typeof timeSuggestions.$inferSelect;
-type AggrecatedData = Record<
-  string,
-  Event & {
-    timeSuggestions: TimeSuggestion[];
-  }
->;
 
 const getEventData = async (id: string) => {
   const result = await db.query.events.findFirst({

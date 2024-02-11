@@ -34,3 +34,6 @@ export const timeSuggestionsRelations = relations(
     }),
   })
 );
+
+export type TEvent = typeof events.$inferSelect;
+export type TimeSuggestion = typeof timeSuggestions.$inferSelect;
