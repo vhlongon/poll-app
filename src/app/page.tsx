@@ -1,9 +1,9 @@
-import { Form } from './components/form';
+import { CreateForm } from './components/CreateForm';
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Form />
+    <main className="flex min-h-screen flex-col items-center justify-center p-8">
+      <CreateForm />
     </main>
   );
 }
