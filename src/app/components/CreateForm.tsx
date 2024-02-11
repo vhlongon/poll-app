@@ -25,14 +25,8 @@ const SubmitButton = () => {
   );
 };
 
-const initialState: FormError = {
-  error: '',
-  name: '',
-  dates: '',
-};
-
 export const CreateForm = () => {
-  const [state, formAction] = useFormState(createEvent, initialState);
+  const [state, formAction] = useFormState(createEvent, undefined);
 
   return (
     <form action={formAction} className="flex flex-col gap-4 w-96">

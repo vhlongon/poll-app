@@ -12,11 +12,11 @@ const schema = z.object({
 
 type PossibleErrorKeys = keyof (typeof schema)['_def'];
 
-export type FormError = {
-  error?: string;
-  name?: string;
-  dates?: string;
-};
+export type FormError = Partial<{
+  error: string;
+  name: string;
+  dates: string;
+}>;
 
 export const createEvent = async (
   prevState: FormError | undefined,
@@ -30,8 +30,9 @@ export const createEvent = async (
   if (!validatedFields.success) {
     const fieldErrors = validatedFields.error.flatten().fieldErrors;
     return {
-      name: fieldErrors.name?.join(', '),
-      dates: fieldErrors.name?.join(', '),
+      name: fieldErrors.name?.join(', ') ?? '',
+      dates: fieldErrors.name?.join(', ') ?? '',
+      error: undefined,
     };
   }
 
@@ -45,6 +46,8 @@ export const createEvent = async (
   } catch (error) {
     console.log(error);
     return {
+      name: undefined,
+      dates: undefined,
       error: 'An error occurred while creating the event',
     };
   }
