@@ -41,7 +41,13 @@ export const CreateForm = () => {
       />
       {state?.name && <ErrorMessage>{state.name}</ErrorMessage>}
       <label className="form-control w-full">
-        <DatePicker />
+        <DatePicker
+          multiple
+          placeholder="Select dates"
+          name="dates"
+          format="MM/DD/YY"
+          minDate={new Date()}
+        />
       </label>
       {state?.dates && <ErrorMessage>{state.dates}</ErrorMessage>}
       <SubmitButton />

@@ -1,17 +1,18 @@
 'use client';
-import './datepicker.css';
+import { ComponentProps } from 'react';
 import MultiDatePicker from 'react-multi-date-picker';
+import './datepicker.css';
 
-export const DatePicker = () => {
+type DatePickerProps = Omit<
+  ComponentProps<typeof MultiDatePicker>,
+  'className' | 'containerClassName' | 'inputClass'
+>;
+export const DatePicker = ({ ...props }: DatePickerProps) => {
   return (
     <MultiDatePicker
-      multiple
-      placeholder="Select dates"
-      name="dates"
-      format="MM/DD/YY"
-      minDate={new Date()}
       inputClass="input input-bordered w-full"
       containerClassName="w-full"
+      {...props}
     />
   );
 };
