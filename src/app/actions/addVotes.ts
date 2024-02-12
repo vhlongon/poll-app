@@ -106,7 +106,7 @@ export const addVotes = async (
     };
   }
 
-  revalidatePath(`/event/${eventId}`);
   revalidatePath(`/events`);
+  revalidatePath(`/event/${eventId}`);
   redirect(`/event/${eventId}`);
 };

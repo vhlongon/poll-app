@@ -2,6 +2,8 @@ import { db } from '@/db/db';
 import Link from 'next/link';
 import { formatDate } from '../utils/utils';
 
+export const revalidate = 30;
+
 export default async function Events() {
   const events = await db.query.events.findMany();
   return (
