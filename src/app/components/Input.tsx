@@ -1,14 +1,16 @@
 import clsx from 'clsx';
-import React, { InputHTMLAttributes, PropsWithChildren } from 'react';
+import { InputHTMLAttributes, ReactNode } from 'react';
 
-type InputProps = PropsWithChildren<InputHTMLAttributes<HTMLInputElement>>;
+type InputProps = InputHTMLAttributes<HTMLInputElement> & { label?: ReactNode };
 
-export const Input = ({ children, className, ...props }: InputProps) => {
+export const Input = ({ label, className, ...props }: InputProps) => {
   return (
     <label className="form-control w-full">
-      <div className="label">
-        <span className="label-text">{children}</span>
-      </div>
+      {label && (
+        <div className="label">
+          <span className="label-text">{label}</span>
+        </div>
+      )}
       <input
         className={clsx('input input-bordered w-full', className)}
         {...props}

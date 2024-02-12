@@ -36,19 +36,19 @@ export const CreateForm = () => {
         type="text"
         id="name"
         name="name"
-        placeholder="Event name"
+        placeholder="My event"
         className="input input-bordered w-full"
+        label="Choose a name for event"
       />
       {state?.name && <ErrorMessage>{state.name}</ErrorMessage>}
-      <label className="form-control w-full">
-        <DatePicker
-          multiple
-          placeholder="Select dates"
-          name="dates"
-          format="MM/DD/YY"
-          minDate={new Date()}
-        />
-      </label>
+      <DatePicker
+        multiple
+        placeholder="Select dates"
+        name="dates"
+        format="MM/DD/YY"
+        minDate={new Date()}
+        label="Choose dates for event"
+      />
       {state?.dates && <ErrorMessage>{state.dates}</ErrorMessage>}
       <SubmitButton />
       {state?.error && <ErrorMessage>{state.error}</ErrorMessage>}

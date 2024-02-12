@@ -1,12 +1,12 @@
 'use client';
 import { TimeSuggestion } from '@/db/schema';
+import { useRef, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { addVotes } from '../actions/addVotes';
+import { formatDate } from '../utils/utils';
 import { Checkbox } from './Checkbox';
 import { ErrorMessage } from './ErrorMessage';
-import { useRef, useState } from 'react';
 import { Input } from './Input';
-import { formatDate } from '../utils/utils';
 
 const SubmitButton = () => {
   const { pending } = useFormStatus();
@@ -84,7 +84,8 @@ export const VoteForm = ({ suggestions, eventId }: VoteFormProps) => {
         type="text"
         id="user"
         name="user"
-        placeholder="Your name"
+        placeholder="Voter"
+        label="Your name"
         className="input input-bordered w-full"
       />
       {errors?.user && <ErrorMessage>{errors.user}</ErrorMessage>}

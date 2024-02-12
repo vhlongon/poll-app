@@ -6,13 +6,20 @@ import './datepicker.css';
 type DatePickerProps = Omit<
   ComponentProps<typeof MultiDatePicker>,
   'className' | 'containerClassName' | 'inputClass'
->;
-export const DatePicker = ({ ...props }: DatePickerProps) => {
+> & { label?: string };
+export const DatePicker = ({ label, ...props }: DatePickerProps) => {
   return (
-    <MultiDatePicker
-      inputClass="input input-bordered w-full"
-      containerClassName="w-full"
-      {...props}
-    />
+    <label className="form-control w-full">
+      {label && (
+        <div className="label">
+          <span className="label-text">{label}</span>
+        </div>
+      )}
+      <MultiDatePicker
+        inputClass="input input-bordered w-full"
+        containerClassName="w-full"
+        {...props}
+      />
+    </label>
   );
 };
