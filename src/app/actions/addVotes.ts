@@ -107,5 +107,6 @@ export const addVotes = async (
   }
 
   revalidatePath(`/event/${eventId}`);
+  revalidatePath(`/events`);
   redirect(`/event/${eventId}`);
 };
