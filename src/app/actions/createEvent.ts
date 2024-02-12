@@ -64,11 +64,10 @@ export const createEvent = async (
       dates.map(d => ({
         eventId,
         time: new Date(d).toISOString(),
-        author: 'anonymous', //TODO: add the author name
       }))
     );
   } catch (error) {
-    console.log(error);
+    console.log(`[ERROR CREATE EVENT]: ${error}`);
     return {
       name: undefined,
       dates: undefined,

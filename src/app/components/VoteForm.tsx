@@ -4,8 +4,9 @@ import { useFormState, useFormStatus } from 'react-dom';
 import { addVotes } from '../actions/addVotes';
 import { Checkbox } from './Checkbox';
 import { ErrorMessage } from './ErrorMessage';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Input } from './Input';
+import { formatDate } from '../utils/utils';
 
 const SubmitButton = () => {
   const { pending } = useFormStatus();
@@ -33,20 +34,33 @@ type VoteFormProps = {
   eventId: string;
 };
 
-const formatDate = (date: string) => {
-  return new Intl.DateTimeFormat('en-GB').format(new Date(date));
-};
-
 export const VoteForm = ({ suggestions, eventId }: VoteFormProps) => {
   const [state, formAction] = useFormState(addVotes, undefined);
+  const [errors, setError] = useState<Partial<typeof state> | undefined>(state);
 
   const formRef = useRef<HTMLFormElement>(null);
+
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    setError(undefined);
+
+    const formData = new FormData(event.currentTarget);
+    const hasSelectedDates = formData.getAll('suggestions').length > 0;
+
+    if (!hasSelectedDates) {
+      event.preventDefault();
+      setError({
+        suggestions: 'Choose at least 1 date',
+      });
+      return;
+    }
+  };
 
   return (
     <form
       ref={formRef}
       action={formAction}
       className="flex flex-col gap-4 w-96"
+      onSubmit={onSubmit}
     >
       <label className="form-control w-full">
         <div className="label">
@@ -64,17 +78,19 @@ export const VoteForm = ({ suggestions, eventId }: VoteFormProps) => {
           ))}
         </fieldset>
       </label>
+      {errors?.suggestions && <ErrorMessage>{errors.suggestions}</ErrorMessage>}
       <Input
         required
         type="text"
-        id="author"
-        name="author"
+        id="user"
+        name="user"
         placeholder="Your name"
         className="input input-bordered w-full"
       />
+      {errors?.user && <ErrorMessage>{errors.user}</ErrorMessage>}
       <input type="hidden" value={eventId} name="eventId" />
-      {state?.suggestions && <ErrorMessage>{state.suggestions}</ErrorMessage>}
       <SubmitButton />
+      {errors?.error && <ErrorMessage>{errors.error}</ErrorMessage>}
     </form>
   );
 };

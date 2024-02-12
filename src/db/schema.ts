@@ -15,7 +15,11 @@ export const timeSuggestions = sqliteTable('time_suggestions', {
     .notNull()
     .references(() => events.id),
   time: text('time').notNull(),
-  author: text('author').notNull(),
+  users: text('users').default(''),
+  votes: integer('votes').notNull().default(0),
+  updatedAt: text('created_at')
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
   createdAt: text('created_at')
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
