@@ -4,6 +4,7 @@ import { createEvent } from '../actions/createEvent';
 import { DatePicker } from './DatePicker';
 import { ErrorMessage } from './ErrorMessage';
 import { Input } from './Input';
+import Link from 'next/link';
 
 const SubmitButton = () => {
   const { pending } = useFormStatus();
@@ -63,6 +64,12 @@ export const CreateForm = () => {
           {state?.dates && <ErrorMessage>{state.dates}</ErrorMessage>}
           <SubmitButton />
           {state?.error && <ErrorMessage>{state.error}</ErrorMessage>}
+          <div className="divider">or</div>
+          <div className="flex justify-center items-center w-full">
+            <Link href="/events" className="link link-accent">
+              See events created
+            </Link>
+          </div>
         </form>
       </div>
     </div>
