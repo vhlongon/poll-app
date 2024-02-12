@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@/db/db';
-import { timeSuggestions } from '@/db/schema';
+import { events, timeSuggestions } from '@/db/schema';
 import { eq, sql } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
@@ -86,10 +86,15 @@ export const addVotes = async (
           .set({
             votes: sql`${timeSuggestions.votes} + 1`,
             users: updatedUsers,
+            updatedAt: new Date().toISOString(),
           })
           .where(eq(timeSuggestions.id, Number(id)))
           .run();
       }
+
+      await tx.update(events).set({
+        updatedAt: new Date().toISOString(),
+      });
     });
   } catch (error) {
     console.log(`[ERROR ADD VOTES]: ${error}`);

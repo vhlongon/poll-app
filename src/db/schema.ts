@@ -5,6 +5,9 @@ export const events = sqliteTable('events', {
   id: text('text').notNull().primaryKey(),
   name: text('name').notNull(),
   author: text('author'),
+  updatedAt: text('updated_at')
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
   createdAt: text('created_at')
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
@@ -18,7 +21,7 @@ export const timeSuggestions = sqliteTable('time_suggestions', {
   time: text('time').notNull(),
   users: text('users').default(''),
   votes: integer('votes').notNull().default(0),
-  updatedAt: text('created_at')
+  updatedAt: text('updated_at')
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
   createdAt: text('created_at')
