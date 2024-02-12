@@ -1,6 +1,7 @@
 import { VoteForm } from '@/app/components/VoteForm';
-import { formatDate } from '@/app/utils/utils';
+import { formatDate, getSuggestionsUsers } from '@/app/utils/utils';
 import { db } from '@/db/db';
+import clsx from 'clsx';
 
 const getEventData = async (id: string) => {
   const result = await db.query.events.findFirst({
@@ -44,11 +45,21 @@ export default async function Event({ params }: EventPageProps) {
           <div className="flex flex-col gap-4">
             {timeSuggestions.map(suggestion => {
               const percentage = (suggestion.votes / totalVotes) * 100;
+              const voters = getSuggestionsUsers(suggestion.users)
+                .map(voter => `${voter}`)
+                .join(' ∣ ');
 
               return (
                 <div
                   key={suggestion.id}
-                  className="flex gap-4 items-center justify-between label-text"
+                  data-tip={`voters: ${voters}`}
+                  className={clsx(
+                    'flex gap-4 items-center justify-between label-text',
+                    {
+                      tooltip: suggestion.users,
+                      'tooltip-primary': suggestion.users,
+                    }
+                  )}
                 >
                   <span>{formatDate(suggestion.time)}</span>
                   <progress
