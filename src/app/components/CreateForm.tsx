@@ -1,8 +1,9 @@
 'use client';
 import { useFormState, useFormStatus } from 'react-dom';
-import { FormError, createEvent } from '../actions/createEvent';
-import { ErrorMessage } from './ErrorMessage';
+import { createEvent } from '../actions/createEvent';
 import { DatePicker } from './DatePicker';
+import { ErrorMessage } from './ErrorMessage';
+import { Input } from './Input';
 
 const SubmitButton = () => {
   const { pending } = useFormStatus();
@@ -30,19 +31,14 @@ export const CreateForm = () => {
 
   return (
     <form action={formAction} className="flex flex-col gap-4 w-96">
-      <label className="form-control w-full">
-        <div className="label">
-          <span className="label-text">Choose a name for the event</span>
-        </div>
-        <input
-          required
-          type="text"
-          id="name"
-          name="name"
-          placeholder="Event name"
-          className="input input-bordered w-full"
-        />
-      </label>
+      <Input
+        required
+        type="text"
+        id="name"
+        name="name"
+        placeholder="Event name"
+        className="input input-bordered w-full"
+      />
       {state?.name && <ErrorMessage>{state.name}</ErrorMessage>}
       <label className="form-control w-full">
         <DatePicker />
