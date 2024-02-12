@@ -9,3 +9,7 @@
     text-wrap: balance;
   }
 }
+
+.dragon-bg {
+  @apply bg-[url(/dwarf-dragon-bg.webp)] bg-no-repeat bg-center bg-cover bg-neutral-800 bg-blend-multiply;
+}

@@ -14,7 +14,7 @@ const SubmitButton = () => {
     <button
       disabled={pending}
       aria-disabled={pending}
-      className="btn btn-success w-full"
+      className="btn btn-primary w-full"
       type="submit"
     >
       {pending ? (
@@ -36,22 +36,19 @@ type VoteFormProps = {
 
 export const VoteForm = ({ suggestions, eventId }: VoteFormProps) => {
   const [state, formAction] = useFormState(addVotes, undefined);
-  const [errors, setError] = useState<Partial<typeof state> | undefined>(state);
+  const [error, setError] = useState('');
 
   const formRef = useRef<HTMLFormElement>(null);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    setError(undefined);
-
     const formData = new FormData(event.currentTarget);
     const hasSelectedDates = formData.getAll('suggestions').length > 0;
 
     if (!hasSelectedDates) {
       event.preventDefault();
-      setError({
-        suggestions: 'Choose at least 1 date',
-      });
-      return;
+      setError('Choose at least 1 date');
+    } else {
+      setError('');
     }
   };
 
@@ -78,7 +75,8 @@ export const VoteForm = ({ suggestions, eventId }: VoteFormProps) => {
           ))}
         </fieldset>
       </label>
-      {errors?.suggestions && <ErrorMessage>{errors.suggestions}</ErrorMessage>}
+      {state?.suggestions && <ErrorMessage>{state.suggestions}</ErrorMessage>}
+      {error && <ErrorMessage>{error}</ErrorMessage>}
       <Input
         required
         type="text"
@@ -88,10 +86,10 @@ export const VoteForm = ({ suggestions, eventId }: VoteFormProps) => {
         label="Your name"
         className="input input-bordered w-full"
       />
-      {errors?.user && <ErrorMessage>{errors.user}</ErrorMessage>}
+      {state?.user && <ErrorMessage>{state.user}</ErrorMessage>}
       <input type="hidden" value={eventId} name="eventId" />
       <SubmitButton />
-      {errors?.error && <ErrorMessage>{errors.error}</ErrorMessage>}
+      {state?.error && <ErrorMessage>{state.error}</ErrorMessage>}
     </form>
   );
 };
