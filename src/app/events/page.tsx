@@ -25,10 +25,7 @@ export default async function Events() {
                     <div className="font-bold">{event.name}</div>
                   </div>
                 </td>
-                <td>
-                  {/* TODO: ADD author to event  */}
-                  Anonymous
-                </td>
+                <td>{event.author}</td>
                 <td>{formatDate(event.createdAt)}</td>
                 <td>
                   <Link

@@ -2,6 +2,7 @@ import { VoteForm } from '@/app/components/VoteForm';
 import { formatDate, getSuggestionsUsers } from '@/app/utils/utils';
 import { db } from '@/db/db';
 import clsx from 'clsx';
+import Link from 'next/link';
 
 const getEventData = async (id: string) => {
   const result = await db.query.events.findFirst({
@@ -10,10 +11,6 @@ const getEventData = async (id: string) => {
       timeSuggestions: true,
     },
   });
-
-  if (!result) {
-    throw new Error('Event not found');
-  }
 
   return result;
 };
@@ -25,7 +22,23 @@ type EventPageProps = {
 };
 
 export default async function Event({ params }: EventPageProps) {
-  const { name, id, timeSuggestions } = await getEventData(params.id);
+  const event = await getEventData(params.id);
+
+  if (!event) {
+    return (
+      <main className="flex min-h-screen flex-col items-center justify-center p-8">
+        <div className="flex flex-col items-center gap-4">
+          <h1 className="text-3xl font-bold mb-4">Event not found</h1>
+          <Link className="btn btn-accent btn-sm max-w-28" href="/">
+            Create one
+          </Link>
+        </div>
+      </main>
+    );
+  }
+
+  const { id, name, author, timeSuggestions } = event;
+
   const totalVotes = timeSuggestions.reduce(
     (total, suggestion) => total + suggestion.votes,
     0
@@ -35,42 +48,47 @@ export default async function Event({ params }: EventPageProps) {
     <main className="flex min-h-screen flex-col items-center justify-center p-8">
       <div className="card min-w-96 max-w-lg bg-base-100 shadow-2xl">
         <div className="card-body items-center text-center">
-          <h2 className="card-title">{name}</h2>
-        </div>
-        <div className="card-actions justify-center flex-col items-center p-4 gap-4">
-          <VoteForm suggestions={timeSuggestions} eventId={id} />
-          <div className="label">
-            <span className="label-text">Selected dates</span>
-          </div>
-          <div className="flex flex-col gap-4">
-            {timeSuggestions.map(suggestion => {
-              const percentage = (suggestion.votes / totalVotes) * 100;
-              const voters = getSuggestionsUsers(suggestion.users)
-                .map(voter => `${voter}`)
-                .join(' ∣ ');
+          <p className="text-right w-full text-xs">Created by: {author}</p>
 
-              return (
-                <div
-                  key={suggestion.id}
-                  data-tip={`voters: ${voters}`}
-                  className={clsx(
-                    'flex gap-4 items-center justify-between label-text',
-                    {
-                      tooltip: suggestion.users,
-                      'tooltip-primary': suggestion.users,
-                    }
-                  )}
-                >
-                  <span>{formatDate(suggestion.time)}</span>
-                  <progress
-                    className="progress progress-secondary w-56"
-                    value={percentage}
-                    max={100}
-                  />
-                  <span>({suggestion.votes})</span>
-                </div>
-              );
-            })}
+          <h2 className="capitalize card-title">
+            <span>{name}</span>
+          </h2>
+
+          <div className="card-actions justify-center flex-col items-center p-4 gap-4">
+            <VoteForm suggestions={timeSuggestions} eventId={id} />
+            <div className="label">
+              <span className="label-text">Selected dates</span>
+            </div>
+            <div className="flex flex-col gap-4">
+              {timeSuggestions.map(suggestion => {
+                const percentage = (suggestion.votes / totalVotes) * 100;
+                const voters = getSuggestionsUsers(suggestion.users)
+                  .map(voter => `${voter}`)
+                  .join(' ∣ ');
+
+                return (
+                  <div
+                    key={suggestion.id}
+                    data-tip={`voters: ${voters}`}
+                    className={clsx(
+                      'flex gap-4 items-center justify-between label-text',
+                      {
+                        tooltip: suggestion.users,
+                        'tooltip-primary': suggestion.users,
+                      }
+                    )}
+                  >
+                    <span>{formatDate(suggestion.time)}</span>
+                    <progress
+                      className="progress progress-secondary w-56"
+                      value={percentage}
+                      max={100}
+                    />
+                    <span>({suggestion.votes})</span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

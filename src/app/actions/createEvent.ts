@@ -9,6 +9,7 @@ import { z } from 'zod';
 
 const schema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
+  author: z.string().default('anonymous'),
   dates: z
 
     .string()
@@ -52,12 +53,13 @@ export const createEvent = async (
 
   const eventId = uuidV4();
 
-  const { name, dates } = validatedFields.data;
+  const { name, dates, author } = validatedFields.data;
 
   try {
     await db.insert(events).values({
       id: eventId,
-      name: name,
+      name,
+      author,
     });
 
     await db.insert(timeSuggestions).values(
