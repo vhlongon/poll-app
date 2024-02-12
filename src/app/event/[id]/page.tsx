@@ -1,5 +1,5 @@
 import { VoteForm } from '@/app/components/VoteForm';
-import { formatDate, getSuggestionsUsers } from '@/app/utils/utils';
+import { formatDate } from '@/app/utils/utils';
 import { db } from '@/db/db';
 
 const getEventData = async (id: string) => {
@@ -38,6 +38,9 @@ export default async function Event({ params }: EventPageProps) {
         </div>
         <div className="card-actions justify-center flex-col items-center p-4 gap-4">
           <VoteForm suggestions={timeSuggestions} eventId={id} />
+          <div className="label">
+            <span className="label-text">Selected dates</span>
+          </div>
           <div className="flex flex-col gap-4">
             {timeSuggestions.map(suggestion => {
               const percentage = (suggestion.votes / totalVotes) * 100;
