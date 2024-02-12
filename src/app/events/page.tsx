@@ -2,7 +2,7 @@ import { db } from '@/db/db';
 import Link from 'next/link';
 import { formatDate } from '../utils/utils';
 
-export const revalidate = 30;
+export const dynamic = 'force-dynamic';
 
 export default async function Events() {
   const events = await db.query.events.findMany();
@@ -16,7 +16,7 @@ export default async function Events() {
           </Link>
         </div>
       ) : (
-        <div className="card min-w-96 max-w-lg bg-base-100 shadow-xl shadow-stone-950">
+        <div className="card min-w-96 bg-base-100 shadow-xl shadow-stone-950">
           <div className="card-body items-center text-center">
             <h1 className="text-3xl font-bold mb-4">Events</h1>
             <div className="overflow-x-auto">
