@@ -36,6 +36,12 @@
   background-color: oklch(var(--s) / 50%) !important;
 }
 
+.rmdp-day span,
+.rmdp-day.rmdp-today span,
+.rmdp-day.rmdp-selected span {
+  border-radius: var(--rounded-btn) !important;
+}
+
 .rmdp-day.rmdp-today span {
   background-color: oklch(var(--s) / 50%) !important;
 }
