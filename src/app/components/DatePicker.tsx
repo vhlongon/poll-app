@@ -1,7 +1,6 @@
 'use client';
 import { ComponentProps } from 'react';
 import MultiDatePicker from 'react-multi-date-picker';
-import './datepicker.css';
 
 type DatePickerProps = Omit<
   ComponentProps<typeof MultiDatePicker>,
