@@ -49,7 +49,6 @@ export const createEvent = async (
     return {
       name: fieldErrors.name?.join(', ') ?? '',
       dates: fieldErrors.dates?.join(', ') ?? '',
-      error: undefined,
     };
   }
 
@@ -73,8 +72,6 @@ export const createEvent = async (
   } catch (error) {
     console.log(`[ERROR CREATE EVENT]: ${error}`);
     return {
-      name: undefined,
-      dates: undefined,
       error: 'An error occurred while creating the event',
     };
   }

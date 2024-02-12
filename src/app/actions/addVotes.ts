@@ -2,11 +2,11 @@
 
 import { db } from '@/db/db';
 import { timeSuggestions } from '@/db/schema';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
-import { getSuggestionsUsers } from '../utils/utils';
+import { appendUser, formatDate } from '../utils/utils';
 
 const schema = z.object({
   suggestions: z
@@ -21,22 +21,6 @@ export type FormError = Partial<{
   error: string;
   user: string;
 }>;
-
-const appendUser = (currentUsers: string, user: string) => {
-  if (!currentUsers) {
-    return user;
-  }
-
-  const normalizedUser = user.toLowerCase();
-  let newUsers = currentUsers;
-
-  if (!newUsers?.includes(normalizedUser)) {
-    newUsers += (newUsers === '' ? '' : ',') + normalizedUser;
-    newUsers = newUsers.replace(/,$/, '');
-  }
-
-  return newUsers;
-};
 
 export const addVotes = async (
   prevState: FormError | undefined,
@@ -55,7 +39,6 @@ export const addVotes = async (
     return {
       suggestions: fieldErrors.suggestions?.join(', ') ?? '',
       user: fieldErrors.user?.join(', ') ?? '',
-      error: undefined,
     };
   }
 
@@ -63,20 +46,45 @@ export const addVotes = async (
 
   try {
     await db.transaction(async tx => {
-      const currentUsersResult = await tx
-        .select({ users: timeSuggestions.users })
-        .from(timeSuggestions)
-        .where(eq(timeSuggestions.eventId, eventId))
-        .get();
-
-      const updatedUsers = appendUser(currentUsersResult?.users ?? '', user);
-      const updatedVotes = getSuggestionsUsers(updatedUsers).length;
+      const event = await db.query.events.findFirst({
+        where: (events, { eq }) => eq(events.id, eventId),
+        with: {
+          timeSuggestions: true,
+        },
+      });
+      const eventSuggestions = event?.timeSuggestions;
+      const normalizedUser = user.toLowerCase();
 
       for (const id of suggestionsData) {
+        const currentSuggestion = eventSuggestions?.find(
+          suggestion => suggestion.id === Number(id)
+        );
+
+        // check if suggestion exists
+        if (!currentSuggestion) {
+          throw new Error('Invalid suggestion');
+        }
+
+        // check if user already voted
+        const hasVoted = currentSuggestion.users
+          ?.split(',')
+          .includes(normalizedUser);
+
+        if (hasVoted) {
+          throw new Error(
+            `You already voted for date: ${formatDate(currentSuggestion.time)}`
+          );
+        }
+
+        const updatedUsers = appendUser(
+          currentSuggestion.users ?? '',
+          normalizedUser
+        );
+
         await tx
           .update(timeSuggestions)
           .set({
-            votes: updatedVotes,
+            votes: sql`${timeSuggestions.votes} + 1`,
             users: updatedUsers,
           })
           .where(eq(timeSuggestions.id, Number(id)))
@@ -86,9 +94,10 @@ export const addVotes = async (
   } catch (error) {
     console.log(`[ERROR ADD VOTES]: ${error}`);
     return {
-      suggestions: undefined,
-      user: undefined,
-      error: 'An error occurred while adding votes to the event',
+      error:
+        error instanceof Error
+          ? error.message
+          : `An error occurred while adding votes to the event`,
     };
   }
 

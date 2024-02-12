@@ -7,3 +7,19 @@ export const getSuggestionsUsers = (suggestions: string | null) => {
 
   return suggestions.split(',');
 };
+
+export const appendUser = (currentUsers: string, user: string) => {
+  if (!currentUsers) {
+    return user;
+  }
+
+  const normalizedUser = user.toLowerCase();
+  let newUsers = currentUsers;
+
+  if (!newUsers?.includes(normalizedUser)) {
+    newUsers += (newUsers === '' ? '' : ',') + normalizedUser;
+    newUsers = newUsers.replace(/,$/, '');
+  }
+
+  return newUsers;
+};
