@@ -9,9 +9,11 @@ import { z } from 'zod';
 
 const schema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
-  author: z.string().default('anonymous'),
+  author: z
+    .string()
+    .default('anonymous')
+    .transform(value => value || 'anonymous'),
   dates: z
-
     .string()
     .refine(
       value => {
