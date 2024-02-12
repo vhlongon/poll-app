@@ -2,7 +2,7 @@
 
 import { db } from '@/db/db';
 import { timeSuggestions } from '@/db/schema';
-import { eq, sql } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
