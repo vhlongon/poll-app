@@ -1,8 +1,14 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Merriweather, Uncial_Antiqua } from 'next/font/google';
+import { CSSProperties } from 'react';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const merriWeather = Merriweather({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+});
+
+const uncialAntiqua = Uncial_Antiqua({ subsets: ['latin'], weight: ['400'] });
 
 export const metadata: Metadata = {
   title: 'Event poll',
@@ -16,7 +22,17 @@ type HomPageProps = Readonly<{
 export default function RootLayout({ children }: HomPageProps) {
   return (
     <html lang="en" data-theme="dark">
-      <body className={inter.className}>{children}</body>
+      <body
+        className={merriWeather.className}
+        style={
+          {
+            '--font-merriWeather': merriWeather.style.fontFamily,
+            '--font-uncialAntiqua': uncialAntiqua.style.fontFamily,
+          } as CSSProperties
+        }
+      >
+        {children}
+      </body>
     </html>
   );
 }

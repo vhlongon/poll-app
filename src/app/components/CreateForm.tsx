@@ -33,7 +33,9 @@ export const CreateForm = () => {
   return (
     <div className="card min-w-72 max-w-lg bg-base-100 shadow-xl shadow-stone-950">
       <div className="card-body items-center">
-        <h1 className="text-3xl font-bold mb-2 card-title">Create an event</h1>
+        <h1 className="text-3xl font-bold mb-2 card-title dnd-heading">
+          Create event
+        </h1>
         <form action={formAction} className="flex flex-col gap-4 w-72">
           <Input
             required

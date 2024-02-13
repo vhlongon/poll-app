@@ -28,7 +28,9 @@ export default async function Event({ params }: EventPageProps) {
     return (
       <main className="flex min-h-screen flex-col items-center justify-center p-8 dragon-bg">
         <div className="flex flex-col items-center gap-4">
-          <h1 className="text-3xl font-bold mb-4">Event not found</h1>
+          <h1 className="text-3xl font-bold mb-4 font-accent dnd-heading">
+            Event not found
+          </h1>
           <Link className="btn btn-accent btn-sm max-w-28" href="/">
             Create one
           </Link>
@@ -50,7 +52,7 @@ export default async function Event({ params }: EventPageProps) {
         <div className="card-body items-center text-center">
           <p className="text-right w-full text-xs">Created by: {author}</p>
 
-          <h1 className="capitalize card-title">
+          <h1 className="capitalize card-title dnd-heading">
             <span>{name}</span>
           </h1>
 

@@ -13,3 +13,11 @@
 .dragon-bg {
   @apply bg-[url(/dwarf-dragon-bg.webp)] bg-no-repeat bg-center bg-cover bg-neutral-800 bg-blend-multiply;
 }
+
+.dnd-heading {
+  @apply font-accent;
+  --dark-red: #450a0a;
+  text-shadow: 5px 5px 0 var(--dark-red), -2px -2px 0 var(--dark-red),
+    2px -2px 0 var(--dark-red), -2px 2px 0 var(--dark-red),
+    2px 2px 0 var(--dark-red);
+}

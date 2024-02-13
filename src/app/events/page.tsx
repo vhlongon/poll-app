@@ -10,17 +10,19 @@ export default async function Events() {
     <main className="flex min-h-screen flex-col items-center justify-center p-8 dragon-bg">
       {events.length === 0 ? (
         <div className="flex flex-col items-center gap-4">
-          <h1 className="text-3xl font-bold mb-4">No events created yet</h1>
+          <h1 className="text-3xl font-bold mb-4 font-accent dnd-heading">
+            No events created yet
+          </h1>
           <Link className="btn btn-accent btn-sm max-w-28" href="/">
             Create one
           </Link>
         </div>
       ) : (
         <div className="card bg-base-100 shadow-xl shadow-stone-950 max-w-[calc(100vw-2rem)] sm:max-w-full">
-          <div className="card-body items-center text-center">
-            <h1 className="text-3xl font-bold mb-4">Events</h1>
+          <div className="card-body items-center text-center font-accent">
+            <h1 className="text-3xl font-bold mb-4 dnd-heading">Events</h1>
             <div className="overflow-x-auto">
-              <table className="table table-xs sm:table-sm">
+              <table className="table table-xs sm:table-sm font-main">
                 <thead>
                   <tr>
                     <th>Name</th>
@@ -29,7 +31,7 @@ export default async function Events() {
                     <th>Details</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="font-main">
                   {events.map(event => (
                     <tr key={event.id}>
                       <td>
