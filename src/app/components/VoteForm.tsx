@@ -56,14 +56,17 @@ export const VoteForm = ({ suggestions, eventId }: VoteFormProps) => {
     <form
       ref={formRef}
       action={formAction}
-      className="flex flex-col gap-4 w-96"
+      className="flex flex-col gap-4"
       onSubmit={onSubmit}
     >
       <label className="form-control w-full">
         <div className="label">
           <span className="label-text">Choose dates</span>
         </div>
-        <fieldset name="suggestions" className="grid grid-cols-3 gap-4">
+        <fieldset
+          name="suggestions"
+          className="grid grid-cols-2 sm:grid-cols-3 gap-4"
+        >
           {suggestions.map(suggestion => (
             <Checkbox
               key={suggestion.id}

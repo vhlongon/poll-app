@@ -16,11 +16,11 @@ export default async function Events() {
           </Link>
         </div>
       ) : (
-        <div className="card min-w-96 bg-base-100 shadow-xl shadow-stone-950">
+        <div className="card bg-base-100 shadow-xl shadow-stone-950 max-w-[calc(100vw-2rem)] sm:max-w-full">
           <div className="card-body items-center text-center">
             <h1 className="text-3xl font-bold mb-4">Events</h1>
             <div className="overflow-x-auto">
-              <table className="table">
+              <table className="table table-xs sm:table-sm">
                 <thead>
                   <tr>
                     <th>Name</th>

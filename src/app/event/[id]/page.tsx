@@ -46,7 +46,7 @@ export default async function Event({ params }: EventPageProps) {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-8 dragon-bg">
-      <div className="card min-w-96 max-w-lg bg-base-100 shadow-xl shadow-stone-950">
+      <div className="card max-w-lg bg-base-100 shadow-xl shadow-stone-950">
         <div className="card-body items-center text-center">
           <p className="text-right w-full text-xs">Created by: {author}</p>
 
@@ -80,7 +80,7 @@ export default async function Event({ params }: EventPageProps) {
                   >
                     <span>{formatDate(suggestion.time)}</span>
                     <progress
-                      className="progress progress-secondary w-56"
+                      className="progress progress-secondary w-32 sm:w-52"
                       value={percentage}
                       max={100}
                     />

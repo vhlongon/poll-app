@@ -7,7 +7,7 @@
   @apply input-bordered;
 }
 .rmdp-calendar {
-  @apply card w-96 bg-base-100 shadow-2xl;
+  @apply card w-72 bg-base-100 shadow-2xl;
 }
 
 .rmdp-day-picker > div {
