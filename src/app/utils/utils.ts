@@ -1,5 +1,9 @@
 export const formatDate = (date: string) => {
-  return new Intl.DateTimeFormat('en-GB').format(new Date(date));
+  return new Intl.DateTimeFormat('en-GB', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric'
+  }).format(new Date(date));
 };
 
 export const getSuggestionsUsers = (suggestions: string | null) => {
