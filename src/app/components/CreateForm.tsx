@@ -18,10 +18,10 @@ const SubmitButton = () => {
       {pending ? (
         <>
           <span className="loading loading-spinner" />
-          Creating...
+          Crafting...
         </>
       ) : (
-        <>Create</>
+        <>Craft</>
       )}
     </button>
   );
@@ -34,7 +34,7 @@ export const CreateForm = () => {
     <div className="card min-w-72 max-w-lg bg-base-100 shadow-xl shadow-stone-950">
       <div className="card-body items-center">
         <h1 className="text-3xl font-bold mb-2 card-title dnd-heading">
-          Create event
+          Forge Gathering
         </h1>
         <form action={formAction} className="flex flex-col gap-4 w-72">
           <Input
@@ -42,7 +42,7 @@ export const CreateForm = () => {
             type="text"
             id="name"
             name="name"
-            placeholder="My event"
+            placeholder="Mine Own Festivity"
             className="input input-bordered w-full"
             label="Choose a name for event"
           />
@@ -51,17 +51,17 @@ export const CreateForm = () => {
             type="text"
             id="author"
             name="author"
-            placeholder="Anonymous"
+            placeholder="Nameless Wanderer"
             className="input input-bordered w-full"
-            label="Optional: Your name"
+            label="At Will: Thy Name"
           />
           <DatePicker
             multiple
-            placeholder="Select dates"
+            placeholder="Choose Days"
             name="dates"
             format="MM/DD/YY"
             minDate={new Date()}
-            label="Choose dates for event"
+            label="Select Days for the Festivity"
           />
           {state?.dates && <ErrorMessage>{state.dates}</ErrorMessage>}
           <SubmitButton />
@@ -69,7 +69,7 @@ export const CreateForm = () => {
           <div className="divider">or</div>
           <div className="flex justify-center items-center w-full">
             <Link href="/events" className="link link-accent">
-              See events created
+              Behold Assemblies Forged
             </Link>
           </div>
         </form>

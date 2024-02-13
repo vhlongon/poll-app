@@ -61,7 +61,7 @@ export const VoteForm = ({ suggestions, eventId }: VoteFormProps) => {
     >
       <label className="form-control w-full">
         <div className="label">
-          <span className="label-text">Choose dates</span>
+          <span className="label-text">Choose Days</span>
         </div>
         <fieldset
           name="suggestions"
@@ -86,7 +86,7 @@ export const VoteForm = ({ suggestions, eventId }: VoteFormProps) => {
         id="user"
         name="user"
         placeholder="Voter"
-        label="Your name"
+        label="Thy Name"
         className="input input-bordered w-full"
       />
       {state?.user && <ErrorMessage>{state.user}</ErrorMessage>}
