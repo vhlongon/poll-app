@@ -41,6 +41,6 @@ This uses [turso](https://turso.tech/).
 
 - Follow the steps [here](https://docs.turso.tech/quickstart)
 - start a local database for development: `pnpm db:start`
-- set `DATABASE_URL='http://127.0.0.1:8080'` in `.env.local`
+- set `DATABASE_URL='http://127.0.0.1:8080'` in `.env` file
 - push changes to the database: `pnpm db:push`
 - open the database in the browser: `db:studio`
