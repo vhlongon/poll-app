@@ -11,8 +11,8 @@ const merriWeather = Merriweather({
 const uncialAntiqua = Uncial_Antiqua({ subsets: ['latin'], weight: ['400'] });
 
 export const metadata: Metadata = {
-  title: 'Event poll',
-  description: 'Create polls for your events',
+  title: 'Cast Thy Voice!',
+  description: 'Craft Mirthful Decrees for Thy Gatherings!',
 };
 
 type HomPageProps = Readonly<{
