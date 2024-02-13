@@ -17,6 +17,8 @@ export const DatePicker = ({ label, ...props }: DatePickerProps) => {
       <MultiDatePicker
         inputClass="input input-bordered w-full"
         containerClassName="w-full"
+        weekStartDayIndex={1}
+        displayWeekNumbers
         {...props}
       />
     </label>
