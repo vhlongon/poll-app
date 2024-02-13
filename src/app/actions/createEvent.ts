@@ -72,7 +72,10 @@ export const createEvent = async (
   } catch (error) {
     console.log(`[ERROR CREATE EVENT]: ${error}`);
     return {
-      error: 'An error occurred while creating the event',
+      error:
+        error instanceof Error
+          ? error.message
+          : `An error occurred while creating the event`,
     };
   }
 
