@@ -1,10 +1,11 @@
 'use client';
+import Link from 'next/link';
+import { useId } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { createEvent } from '../actions/createEvent';
 import { DatePicker } from './DatePicker';
 import { ErrorMessage } from './ErrorMessage';
 import { Input } from './Input';
-import Link from 'next/link';
 
 const SubmitButton = () => {
   const { pending } = useFormStatus();
@@ -28,6 +29,7 @@ const SubmitButton = () => {
 };
 
 export const CreateForm = () => {
+  const id = useId();
   const [state, formAction] = useFormState(createEvent, undefined);
 
   return (
@@ -36,7 +38,7 @@ export const CreateForm = () => {
         <h1 className="text-3xl font-bold mb-2 card-title dnd-heading">
           Forge Gathering
         </h1>
-        <form action={formAction} className="flex flex-col gap-4 w-72">
+        <form action={formAction} className="flex flex-col gap-4 w-72" id={id}>
           <Input
             required
             type="text"

@@ -1,9 +1,17 @@
-import { CreateForm } from './components/CreateForm';
+import { redirect } from 'next/navigation';
+import { ProtectForm } from './components/ProtectForm';
+import { isValidProtectPasswordInCookies } from './utils/protect';
 
-export default function Home() {
+export default function RootPage() {
+  const isAuthorized = isValidProtectPasswordInCookies();
+
+  if (isAuthorized) {
+    redirect('/home');
+  }
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-8 dragon-bg">
-      <CreateForm />
+      <ProtectForm />
     </main>
   );
 }
