@@ -1,6 +1,5 @@
 'use client';
 import { TimeSuggestion } from '@/db/schema';
-import { useRouter } from 'next/navigation';
 import { Fragment, useEffect, useId, useRef, useState } from 'react';
 import { useFormState } from 'react-dom';
 import { editSuggestion } from '../actions/editSuggestion';
@@ -22,7 +21,6 @@ export const EditSuggestionForm = ({
   const [state, formAction] = useFormState(editSuggestion, undefined);
   const [currentUsers, setCurrentUsers] = useState<string[]>([]);
   const [newUser, setNewUser] = useState('');
-  const { refresh } = useRouter();
   const isSuccessful = state?.success;
 
   const updateUsers = (user: string) => {
@@ -40,10 +38,9 @@ export const EditSuggestionForm = ({
   useEffect(() => {
     if (isSuccessful) {
       setNewUser('');
-      refresh();
       closeModal(ref.current);
     }
-  }, [isSuccessful, refresh, users]);
+  }, [isSuccessful, users]);
 
   return (
     <>
