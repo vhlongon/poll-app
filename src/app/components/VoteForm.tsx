@@ -1,33 +1,13 @@
 'use client';
 import { TimeSuggestion } from '@/db/schema';
 import { useRef, useState } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormState } from 'react-dom';
 import { addVotes } from '../actions/addVotes';
 import { formatDate } from '../utils/utils';
 import { Checkbox } from './Checkbox';
 import { ErrorMessage } from './ErrorMessage';
 import { Input } from './Input';
-
-const SubmitButton = () => {
-  const { pending } = useFormStatus();
-  return (
-    <button
-      disabled={pending}
-      aria-disabled={pending}
-      className="btn btn-primary w-full"
-      type="submit"
-    >
-      {pending ? (
-        <>
-          <span className="loading loading-spinner" />
-          adding...
-        </>
-      ) : (
-        <>Add Votes</>
-      )}
-    </button>
-  );
-};
+import { SubmitButton } from './SubmitButton';
 
 type VoteFormProps = {
   suggestions: TimeSuggestion[];
@@ -91,7 +71,7 @@ export const VoteForm = ({ suggestions, eventId }: VoteFormProps) => {
       />
       {state?.user && <ErrorMessage>{state.user}</ErrorMessage>}
       <input type="hidden" value={eventId} name="eventId" />
-      <SubmitButton />
+      <SubmitButton loadingText="Enriching..." text="Augment" />
       {state?.error && <ErrorMessage>{state.error}</ErrorMessage>}
     </form>
   );

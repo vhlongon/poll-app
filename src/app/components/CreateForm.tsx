@@ -1,32 +1,12 @@
 'use client';
 import Link from 'next/link';
 import { useId } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormState } from 'react-dom';
 import { createEvent } from '../actions/createEvent';
 import { DatePicker } from './DatePicker';
 import { ErrorMessage } from './ErrorMessage';
 import { Input } from './Input';
-
-const SubmitButton = () => {
-  const { pending } = useFormStatus();
-  return (
-    <button
-      disabled={pending}
-      aria-disabled={pending}
-      className="btn btn-primary w-full"
-      type="submit"
-    >
-      {pending ? (
-        <>
-          <span className="loading loading-spinner" />
-          Crafting...
-        </>
-      ) : (
-        <>Craft</>
-      )}
-    </button>
-  );
-};
+import { SubmitButton } from './SubmitButton';
 
 export const CreateForm = () => {
   const id = useId();
@@ -66,7 +46,7 @@ export const CreateForm = () => {
             label="Select Days for the Festivity"
           />
           {state?.dates && <ErrorMessage>{state.dates}</ErrorMessage>}
-          <SubmitButton />
+          <SubmitButton loadingText="Crafting..." text="Craft" />
           {state?.error && <ErrorMessage>{state.error}</ErrorMessage>}
           <div className="divider">or</div>
           <div className="flex justify-center items-center w-full">
