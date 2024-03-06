@@ -1,21 +1,10 @@
 'use client';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { DeleteForm } from './DeleteForm';
-
-const isDialog = (ref: unknown): ref is HTMLDialogElement => {
-  return ref instanceof HTMLDialogElement;
-};
+import { Modal, openModal } from './Modal';
 
 type EventDeleteProps = {
   id: string;
-};
-
-const openModal = (ref: unknown) => {
-  if (!isDialog(ref)) {
-    return;
-  }
-
-  ref.showModal();
 };
 
 export const EventDeleteModal = ({ id }: EventDeleteProps) => {
@@ -29,16 +18,9 @@ export const EventDeleteModal = ({ id }: EventDeleteProps) => {
       >
         Delete
       </button>
-      <dialog ref={ref} className="modal">
-        <div className="modal-box">
-          <DeleteForm id={id} />
-          <div className="modal-action">
-            <form method="dialog">
-              <button className="btn btn-sm">Close</button>
-            </form>
-          </div>
-        </div>
-      </dialog>
+      <Modal ref={ref}>
+        <DeleteForm id={id} />
+      </Modal>
     </>
   );
 };
