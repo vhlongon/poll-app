@@ -52,7 +52,7 @@ export default async function Event({ params }: EventPageProps) {
         <div className="card-body items-center text-center">
           <p className="text-right w-full text-xs">Created by: {author}</p>
 
-          <h1 className="capitalize card-title dnd-heading">
+          <h1 className="capitalize text-3xl card-title dnd-heading">
             <span>{name}</span>
           </h1>
 
