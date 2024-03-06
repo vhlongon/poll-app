@@ -1,3 +1,4 @@
+import { EventDeleteModal } from '@/app/components/EventDeleteModal';
 import { VoteForm } from '@/app/components/VoteForm';
 import { formatDate, getSuggestionsUsers } from '@/app/utils/utils';
 import { db } from '@/db/db';
@@ -91,6 +92,7 @@ export default async function Event({ params }: EventPageProps) {
                 );
               })}
             </div>
+            <EventDeleteModal id={id} />
           </div>
         </div>
       </div>
