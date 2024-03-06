@@ -65,7 +65,7 @@ export default async function Event({ params }: EventPageProps) {
             </div>
             <div className="flex flex-col gap-4">
               {timeSuggestions.map(suggestion => {
-                const percentage = (suggestion.votes / totalVotes) * 100;
+                const percentage = (suggestion.votes / totalVotes) * 100 || 0;
                 const voters = getSuggestionsUsers(suggestion.users)
                   .map(voter => `${voter}`)
                   .join(' ∣ ');
