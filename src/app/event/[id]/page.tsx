@@ -1,3 +1,4 @@
+import { EditSuggestionsModal } from '@/app/components/EditSuggestionModal';
 import { EventDeleteModal } from '@/app/components/EventDeleteModal';
 import { VoteForm } from '@/app/components/VoteForm';
 import { formatDate, getSuggestionsUsers } from '@/app/utils/utils';
@@ -87,7 +88,10 @@ export default async function Event({ params }: EventPageProps) {
                       value={percentage}
                       max={100}
                     />
-                    <span>({suggestion.votes})</span>
+                    <div className="flex gap-2 items-center">
+                      <span>({suggestion.votes})</span>
+                      <EditSuggestionsModal suggestion={suggestion} />
+                    </div>
                   </div>
                 );
               })}
