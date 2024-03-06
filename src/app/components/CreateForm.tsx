@@ -26,7 +26,7 @@ export const CreateForm = () => {
             name="name"
             placeholder="Mine Own Festivity"
             className="input input-bordered w-full"
-            label="Choose a name for event"
+            label="Selecteth a name for the gathering"
           />
           {state?.name && <ErrorMessage>{state.name}</ErrorMessage>}
           <Input
