@@ -37,7 +37,6 @@ export const editSuggestion = async (
   }
 
   const { id, users, eventId } = validatedFields.data;
-  console.log('🚀 ~ users:', users);
 
   try {
     await db
