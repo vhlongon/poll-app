@@ -1,6 +1,7 @@
 import { db } from '@/db/db';
 import Link from 'next/link';
 import { formatDate } from '../utils/utils';
+import { EventDeleteModal } from '../components/EventDeleteModal';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,7 +29,7 @@ export default async function Events() {
                     <th>Name</th>
                     <th>Created by</th>
                     <th>Created at</th>
-                    <th>Details</th>
+                    <th>actions</th>
                   </tr>
                 </thead>
                 <tbody className="font-main">
@@ -41,13 +42,14 @@ export default async function Events() {
                       </td>
                       <td>{event.author}</td>
                       <td>{formatDate(event.createdAt)}</td>
-                      <td>
+                      <td className="flex gap-2">
                         <Link
                           className="btn btn-accent btn-sm"
                           href={`event/${event.id}`}
                         >
-                          Go to event
+                          See
                         </Link>
+                        <EventDeleteModal id={event.id} />
                       </td>
                     </tr>
                   ))}
