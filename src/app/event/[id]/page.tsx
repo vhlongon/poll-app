@@ -92,6 +92,7 @@ export default async function Event({ params }: EventPageProps) {
                 );
               })}
             </div>
+            <div className="divider" />
             <EventDeleteModal id={id} />
           </div>
         </div>
