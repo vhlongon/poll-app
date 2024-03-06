@@ -20,15 +20,7 @@ export const DeleteForm = ({ id }: DelteFormProps) => {
         id={formId}
       >
         <div className="form-control w-full max-w-xs">
-          <input
-            type="hidden"
-            name="id"
-            value={id}
-            id="password"
-            className="input input-bordered w-full max-w-xs"
-            placeholder="Enter password"
-            required
-          />
+          <input type="hidden" name="id" value={id} id="id" />
         </div>
         <SubmitButton
           loadingText="Banishing..."
