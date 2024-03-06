@@ -12,6 +12,14 @@ export const openModal = (ref: unknown) => {
   ref.showModal();
 };
 
+export const closeModal = (ref: unknown) => {
+  if (!isDialog(ref)) {
+    return;
+  }
+
+  ref.close();
+};
+
 export const Modal = forwardRef<HTMLDialogElement, { children: ReactNode }>(
   ({ children }, ref) => {
     return (
