@@ -16,7 +16,7 @@ export const EventDeleteModal = ({ id }: EventDeleteProps) => {
         className="btn btn-error btn-sm"
         onClick={() => openModal(ref.current)}
       >
-        Delete
+        Banish
       </button>
       <Modal ref={ref}>
         <DeleteForm id={id} />
