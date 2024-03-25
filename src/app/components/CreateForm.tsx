@@ -33,7 +33,9 @@ export const CreateForm = () => {
             type="number"
             id="maxParticipants"
             name="maxParticipants"
-            placeholder="0"
+            min={2}
+            defaultValue={6}
+            max={10}
             className="input input-bordered w-full"
             label="Utmost Count of Attendees"
           />
