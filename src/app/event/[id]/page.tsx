@@ -47,11 +47,8 @@ export default async function Event({ params }: EventPageProps) {
 
   const { id, name, author, timeSuggestions } = event;
 
-  const totalVotes = timeSuggestions.reduce(
-    (total, suggestion) => total + suggestion.votes,
-    0
-  );
-  const totalUniqueVoters = getUniqueVoters(timeSuggestions).length;
+  const uniqueVoters = getUniqueVoters(timeSuggestions);
+  const totalUniqueVoters = uniqueVoters.length;
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-8 dragon-bg">
@@ -75,15 +72,15 @@ export default async function Event({ params }: EventPageProps) {
             </div>
             <div className="flex flex-col gap-4">
               {timeSuggestions.map(suggestion => {
-                const percentage = (suggestion.votes / totalVotes) * 100 || 0;
-                const voters = getSuggestionsUsers(suggestion.users)
-                  .map(voter => `${voter}`)
-                  .join(' ∣ ');
+                const suggestionVoters = getSuggestionsUsers(suggestion.users);
+                const percentage =
+                  (suggestionVoters.length / totalUniqueVoters) * 100;
+                const combinedVoters = suggestionVoters.join(' ∣ ');
 
                 return (
                   <div
                     key={suggestion.id}
-                    data-tip={`voters: ${voters}`}
+                    data-tip={`voters: ${combinedVoters}`}
                     className={clsx(
                       'flex gap-4 items-center justify-between label-text',
                       {
