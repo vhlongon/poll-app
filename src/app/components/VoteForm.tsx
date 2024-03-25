@@ -3,7 +3,7 @@ import { TimeSuggestion } from '@/db/schema';
 import { useRef, useState } from 'react';
 import { useFormState } from 'react-dom';
 import { addVotes } from '../actions/addVotes';
-import { formatDate } from '../utils/utils';
+import { formatDate, getUniqueVoters } from '../utils/utils';
 import { Checkbox } from './Checkbox';
 import { ErrorMessage } from './ErrorMessage';
 import { Input } from './Input';
@@ -12,9 +12,14 @@ import { SubmitButton } from './SubmitButton';
 type VoteFormProps = {
   suggestions: TimeSuggestion[];
   eventId: string;
+  maxParticipants: number;
 };
 
-export const VoteForm = ({ suggestions, eventId }: VoteFormProps) => {
+export const VoteForm = ({
+  suggestions,
+  eventId,
+  maxParticipants,
+}: VoteFormProps) => {
   const [state, formAction] = useFormState(addVotes, undefined);
   const [error, setError] = useState('');
 
@@ -31,6 +36,8 @@ export const VoteForm = ({ suggestions, eventId }: VoteFormProps) => {
       setError('');
     }
   };
+
+  const totalUniqueVoters = getUniqueVoters(suggestions).length;
 
   return (
     <form
@@ -70,6 +77,10 @@ export const VoteForm = ({ suggestions, eventId }: VoteFormProps) => {
         className="input input-bordered w-full"
       />
       {state?.user && <ErrorMessage>{state.user}</ErrorMessage>}
+      <div className="flex justify-between text-xs">
+        <span>Max: {maxParticipants} </span>
+        <span>Total: {totalUniqueVoters} </span>
+      </div>
       <input type="hidden" value={eventId} name="eventId" />
       <SubmitButton loadingText="Enriching..." text="Augment" />
       {state?.error && <ErrorMessage>{state.error}</ErrorMessage>}

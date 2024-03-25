@@ -1,8 +1,10 @@
+import { TimeSuggestion } from '@/db/schema';
+
 export const formatDate = (date: string) => {
   return new Intl.DateTimeFormat('en-GB', {
     weekday: 'short',
     month: 'short',
-    day: 'numeric'
+    day: 'numeric',
   }).format(new Date(date));
 };
 
@@ -26,4 +28,17 @@ export const appendUser = (currentUsers: string, user: string) => {
   }
 
   return newUsers;
+};
+
+export const getUniqueVoters = (suggestions: TimeSuggestion[]) => {
+  return suggestions.reduce((voters: string[], suggestion) => {
+    const users = getSuggestionsUsers(suggestion.users);
+    users.forEach(user => {
+      if (!voters.includes(user)) {
+        voters.push(user);
+      }
+    });
+
+    return voters;
+  }, []);
 };

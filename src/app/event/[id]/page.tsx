@@ -59,7 +59,11 @@ export default async function Event({ params }: EventPageProps) {
           </h1>
 
           <div className="card-actions justify-center flex-col items-center p-4 gap-4">
-            <VoteForm suggestions={timeSuggestions} eventId={id} />
+            <VoteForm
+              suggestions={timeSuggestions}
+              eventId={id}
+              maxParticipants={event.maxParticipants ?? 0}
+            />
             <div className="label">
               <span className="label-text">Selected dates</span>
             </div>
