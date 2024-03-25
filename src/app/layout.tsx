@@ -34,7 +34,7 @@ export default function RootLayout({ children }: HomPageProps) {
       >
         <div className=" flex min-h-screen flex-col items-center justify-center p-8 dragon-bg relative">
           <Navigation />
-          <div className="mt-8 sm:mt-0">{children}</div>
+          {children}
         </div>
       </body>
     </html>
