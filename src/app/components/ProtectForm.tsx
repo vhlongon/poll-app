@@ -4,9 +4,11 @@ import { useFormState } from 'react-dom';
 import { checkPassword } from '../actions/checkPassword';
 import { ErrorMessage } from './ErrorMessage';
 import { SubmitButton } from './SubmitButton';
+import { useSearchParams } from 'next/navigation';
 
 export const ProtectForm = () => {
   const id = useId();
+  const searchParms = useSearchParams();
   const [state, formAction] = useFormState(checkPassword, undefined);
 
   return (
@@ -16,6 +18,12 @@ export const ProtectForm = () => {
           Thou shalt utter the secret phrase.
         </h1>
         <form action={formAction} className="flex flex-col gap-4" id={id}>
+          <input
+            type="hidden"
+            id="redirect"
+            name="redirect"
+            value={searchParms.get('redirect') ?? '/home'}
+          />
           <div className="form-control w-full max-w-xs">
             <input
               type="password"
