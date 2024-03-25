@@ -5,6 +5,7 @@ import {
   formatDate,
   getSuggestionsUsers,
   getUniqueVoters,
+  orderDates,
 } from '@/app/utils/utils';
 import { db } from '@/db/db';
 import clsx from 'clsx';
@@ -71,7 +72,7 @@ export default async function Event({ params }: EventPageProps) {
               <span className="label-text">Selected dates</span>
             </div>
             <div className="flex flex-col gap-4">
-              {timeSuggestions.map(suggestion => {
+              {orderDates(timeSuggestions, 'asc').map(suggestion => {
                 const suggestionVoters = getSuggestionsUsers(suggestion.users);
                 const percentage =
                   (suggestionVoters.length / totalUniqueVoters) * 100;

@@ -42,3 +42,15 @@ export const getUniqueVoters = (suggestions: TimeSuggestion[]) => {
     return voters;
   }, []);
 };
+
+export const orderDates = (
+  suggestions: TimeSuggestion[],
+  type: 'asc' | 'desc'
+) => {
+  return suggestions.sort((a, b) => {
+    const dateA = new Date(a.time).getTime();
+    const dateB = new Date(b.time).getTime();
+
+    return type === 'asc' ? dateA - dateB : dateB - dateA;
+  });
+};
