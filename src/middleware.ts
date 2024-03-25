@@ -6,8 +6,6 @@ export const middleware = async (req: NextRequest) => {
   const pathname = req.nextUrl.pathname;
   const isRoot = pathname === '/';
 
-  console.log(NextResponse);
-  console.log(pathname);
   if (isRoot) {
     return NextResponse.next();
   }
