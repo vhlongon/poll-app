@@ -13,6 +13,7 @@ const schema = z.object({
     .string()
     .default('anonymous')
     .transform(value => value || 'anonymous'),
+  maxParticipants: z.string().default('0').transform(Number),
   dates: z
     .string()
     .refine(
@@ -54,13 +55,14 @@ export const createEvent = async (
 
   const eventId = uuidV4();
 
-  const { name, dates, author } = validatedFields.data;
+  const { name, dates, author, maxParticipants } = validatedFields.data;
 
   try {
     await db.insert(events).values({
       id: eventId,
       name,
       author,
+      maxParticipants,
     });
 
     await db.insert(timeSuggestions).values(

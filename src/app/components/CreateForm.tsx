@@ -30,6 +30,15 @@ export const CreateForm = () => {
           />
           {state?.name && <ErrorMessage>{state.name}</ErrorMessage>}
           <Input
+            type="number"
+            id="maxParticipants"
+            name="maxParticipants"
+            placeholder="0"
+            className="input input-bordered w-full"
+            label="Utmost Count of Attendees"
+          />
+
+          <Input
             type="text"
             id="author"
             name="author"

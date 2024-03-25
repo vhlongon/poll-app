@@ -11,6 +11,7 @@ export const events = sqliteTable('events', {
   createdAt: text('created_at')
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
+  maxParticipants: integer('max_participants').default(0),
 });
 
 export const timeSuggestions = sqliteTable('time_suggestions', {
