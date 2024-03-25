@@ -1,7 +1,11 @@
 import { EditSuggestionsModal } from '@/app/components/EditSuggestionModal';
 import { EventDeleteModal } from '@/app/components/EventDeleteModal';
 import { VoteForm } from '@/app/components/VoteForm';
-import { formatDate, getSuggestionsUsers } from '@/app/utils/utils';
+import {
+  formatDate,
+  getSuggestionsUsers,
+  getUniqueVoters,
+} from '@/app/utils/utils';
 import { db } from '@/db/db';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -47,6 +51,7 @@ export default async function Event({ params }: EventPageProps) {
     (total, suggestion) => total + suggestion.votes,
     0
   );
+  const totalUniqueVoters = getUniqueVoters(timeSuggestions).length;
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-8 dragon-bg">
@@ -63,6 +68,7 @@ export default async function Event({ params }: EventPageProps) {
               suggestions={timeSuggestions}
               eventId={id}
               maxParticipants={event.maxParticipants ?? 0}
+              totalUniqueVoters={totalUniqueVoters}
             />
             <div className="label">
               <span className="label-text">Selected dates</span>
@@ -94,7 +100,11 @@ export default async function Event({ params }: EventPageProps) {
                     />
                     <div className="flex gap-2 items-center">
                       <span>({suggestion.votes})</span>
-                      <EditSuggestionsModal suggestion={suggestion} />
+                      <EditSuggestionsModal
+                        suggestion={suggestion}
+                        maxParticipants={event.maxParticipants ?? 0}
+                        totalUniqueVoters={totalUniqueVoters}
+                      />
                     </div>
                   </div>
                 );

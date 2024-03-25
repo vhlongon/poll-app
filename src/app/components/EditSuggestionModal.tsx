@@ -4,8 +4,20 @@ import { EditSuggestionForm } from './EditSuggestionForm';
 
 type EventDeleteProps = {
   suggestion: TimeSuggestion;
+  maxParticipants: number;
+  totalUniqueVoters: number;
 };
 
-export const EditSuggestionsModal = ({ suggestion }: EventDeleteProps) => {
-  return <EditSuggestionForm {...suggestion} />;
+export const EditSuggestionsModal = ({
+  suggestion,
+  maxParticipants,
+  totalUniqueVoters,
+}: EventDeleteProps) => {
+  return (
+    <EditSuggestionForm
+      {...suggestion}
+      maxParticipants={maxParticipants}
+      totalUniqueVoters={totalUniqueVoters}
+    />
+  );
 };

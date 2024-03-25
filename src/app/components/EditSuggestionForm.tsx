@@ -9,12 +9,17 @@ import { Input } from './Input';
 import { Modal, closeModal, openModal } from './Modal';
 import { SubmitButton } from './SubmitButton';
 
-type EditSuggestionFormProps = TimeSuggestion;
+type EditSuggestionFormProps = TimeSuggestion & {
+  totalUniqueVoters: number;
+  maxParticipants: number;
+};
 
 export const EditSuggestionForm = ({
   id,
   eventId,
   users,
+  maxParticipants,
+  totalUniqueVoters,
 }: EditSuggestionFormProps) => {
   const formId = useId();
   const ref = useRef<HTMLDialogElement>(null);
@@ -41,6 +46,8 @@ export const EditSuggestionForm = ({
       closeModal(ref.current);
     }
   }, [isSuccessful, users]);
+
+  const hasMaxParticipants = totalUniqueVoters >= maxParticipants;
 
   return (
     <>
@@ -103,6 +110,7 @@ export const EditSuggestionForm = ({
                 type="text"
                 id="user"
                 name="user"
+                disabled={hasMaxParticipants}
                 placeholder="Thy Name"
                 label="Append Companion"
                 className="input input-bordered w-full"
@@ -113,12 +121,16 @@ export const EditSuggestionForm = ({
                 className="btn btn-accent"
                 name="users"
                 type="button"
-                disabled={!newUser || currentUsers.includes(newUser)}
+                disabled={
+                  !newUser ||
+                  currentUsers.includes(newUser) ||
+                  hasMaxParticipants
+                }
                 onClick={() => {
                   updateUsers(newUser);
                 }}
               >
-                Adjoin
+                {hasMaxParticipants ? 'At Capacity' : 'Adjoin'}
               </button>
             </div>
             <div className="mt-4">

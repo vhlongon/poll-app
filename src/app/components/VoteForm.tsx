@@ -3,7 +3,7 @@ import { TimeSuggestion } from '@/db/schema';
 import { useRef, useState } from 'react';
 import { useFormState } from 'react-dom';
 import { addVotes } from '../actions/addVotes';
-import { formatDate, getUniqueVoters } from '../utils/utils';
+import { formatDate } from '../utils/utils';
 import { Checkbox } from './Checkbox';
 import { ErrorMessage } from './ErrorMessage';
 import { Input } from './Input';
@@ -13,12 +13,14 @@ type VoteFormProps = {
   suggestions: TimeSuggestion[];
   eventId: string;
   maxParticipants: number;
+  totalUniqueVoters: number;
 };
 
 export const VoteForm = ({
   suggestions,
   eventId,
   maxParticipants,
+  totalUniqueVoters,
 }: VoteFormProps) => {
   const [state, formAction] = useFormState(addVotes, undefined);
   const [error, setError] = useState('');
@@ -36,8 +38,6 @@ export const VoteForm = ({
       setError('');
     }
   };
-
-  const totalUniqueVoters = getUniqueVoters(suggestions).length;
 
   return (
     <form
