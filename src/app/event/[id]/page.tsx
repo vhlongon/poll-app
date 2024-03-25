@@ -32,7 +32,7 @@ export default async function Event({ params }: EventPageProps) {
 
   if (!event) {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center p-8 dragon-bg">
+      <main>
         <div className="flex flex-col items-center gap-4">
           <h1 className="text-3xl font-bold mb-4 font-accent dnd-heading">
             Event not found
@@ -51,7 +51,7 @@ export default async function Event({ params }: EventPageProps) {
   const totalUniqueVoters = uniqueVoters.length;
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8 dragon-bg">
+    <main>
       <div className="card max-w-lg bg-base-100 shadow-xl shadow-stone-950">
         <div className="card-body items-center text-center">
           <p className="text-right w-full text-xs">Created by: {author}</p>

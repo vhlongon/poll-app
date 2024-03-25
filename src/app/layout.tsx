@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Merriweather, Uncial_Antiqua } from 'next/font/google';
 import { CSSProperties } from 'react';
 import './globals.css';
+import { Navigation } from './components/Navigation';
 
 const merriWeather = Merriweather({
   subsets: ['latin'],
@@ -23,7 +24,7 @@ export default function RootLayout({ children }: HomPageProps) {
   return (
     <html lang="en" data-theme="dark">
       <body
-        className={merriWeather.className}
+        className={`${merriWeather.className}`}
         style={
           {
             '--font-merriWeather': merriWeather.style.fontFamily,
@@ -31,7 +32,10 @@ export default function RootLayout({ children }: HomPageProps) {
           } as CSSProperties
         }
       >
-        {children}
+        <div className=" flex min-h-screen flex-col items-center justify-center p-8 dragon-bg relative">
+          <Navigation />
+          <div className="mt-8 sm:mt-0">{children}</div>
+        </div>
       </body>
     </html>
   );
