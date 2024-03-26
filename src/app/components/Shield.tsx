@@ -1,13 +1,22 @@
 import { ReactNode } from 'react';
+import clsx from 'clsx';
 
 type ShieldProps = {
   children: ReactNode;
+  className?: string;
 };
 
-export const Shield = ({ children }: ShieldProps) => {
+export const Shield = ({ children, className }: ShieldProps) => {
   return (
-    <div className="flex justify-center items-center w-8 h-8 mask mask-hexagon bg-neutral">
-      <span className="text text-xs font-bold tracking-wider">{children}</span>
+    <div
+      className={clsx(
+        'flex justify-center items-center w-7 h-7 mask mask-hexagon bg-neutral',
+        className
+      )}
+    >
+      <span className="text text-[0.625rem] font-bold tracking-wider">
+        {children}
+      </span>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import {
   getSuggestionsUsers,
   getUniqueVoters,
   orderDates,
+  sort,
 } from '@/app/utils/utils';
 import { db } from '@/db/db';
 import clsx from 'clsx';
@@ -77,7 +78,9 @@ export default async function Event({ params }: EventPageProps) {
                 const suggestionVoters = getSuggestionsUsers(suggestion.users);
                 const percentage =
                   (suggestionVoters.length / totalUniqueVoters) * 100;
-                const combinedVoters = suggestionVoters.join(' ∣ ');
+                const combinedVoters = sort(suggestionVoters, 'asc').join(
+                  ' ∣ '
+                );
 
                 return (
                   <div key={suggestion.id} className="flex flex-col">
@@ -107,14 +110,23 @@ export default async function Event({ params }: EventPageProps) {
                       </div>
                     </div>
                     {uniqueVoters.length > 0 ? (
-                      <ul className="flex justify-center gap-2">
-                        {uniqueVoters.map(voter => (
-                          <li key={voter}>
-                            <Shield>
-                              {voter.substring(0, 2).toUpperCase()}
-                            </Shield>
-                          </li>
-                        ))}
+                      <ul className="flex justify-center gap-2 mt-1">
+                        {sort(uniqueVoters, 'asc').map(voter => {
+                          const hasVoted = suggestionVoters.includes(voter);
+                          return (
+                            <li key={voter}>
+                              <Shield
+                                className={
+                                  hasVoted
+                                    ? 'bg-secondary text-neutral-800'
+                                    : ''
+                                }
+                              >
+                                {voter.substring(0, 2).toUpperCase()}
+                              </Shield>
+                            </li>
+                          );
+                        })}
                       </ul>
                     ) : null}
                   </div>
