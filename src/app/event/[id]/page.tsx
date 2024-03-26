@@ -1,5 +1,6 @@
 import { EditSuggestionsModal } from '@/app/components/EditSuggestionModal';
 import { EventDeleteModal } from '@/app/components/EventDeleteModal';
+import { Shield } from '@/app/components/Shield';
 import { VoteForm } from '@/app/components/VoteForm';
 import {
   formatDate,
@@ -79,31 +80,43 @@ export default async function Event({ params }: EventPageProps) {
                 const combinedVoters = suggestionVoters.join(' ∣ ');
 
                 return (
-                  <div
-                    key={suggestion.id}
-                    data-tip={`voters: ${combinedVoters}`}
-                    className={clsx(
-                      'flex gap-4 items-center justify-between label-text',
-                      {
-                        tooltip: suggestion.users,
-                        'tooltip-accent': suggestion.users,
-                      }
-                    )}
-                  >
-                    <span>{formatDate(suggestion.time)}</span>
-                    <progress
-                      className="progress progress-secondary w-32 sm:w-52"
-                      value={percentage}
-                      max={100}
-                    />
-                    <div className="flex gap-2 items-center">
-                      <span>({suggestion.votes})</span>
-                      <EditSuggestionsModal
-                        suggestion={suggestion}
-                        maxParticipants={event.maxParticipants ?? 0}
-                        totalUniqueVoters={totalUniqueVoters}
+                  <div key={suggestion.id} className="flex flex-col">
+                    <div
+                      data-tip={`voters: ${combinedVoters}`}
+                      className={clsx(
+                        'flex gap-4 items-center justify-between label-text',
+                        {
+                          tooltip: suggestion.users,
+                          'tooltip-accent': suggestion.users,
+                        }
+                      )}
+                    >
+                      <span>{formatDate(suggestion.time)}</span>
+                      <progress
+                        className="progress progress-secondary w-32 sm:w-52"
+                        value={percentage}
+                        max={100}
                       />
+                      <div className="flex gap-2 items-center">
+                        <span>({suggestion.votes})</span>
+                        <EditSuggestionsModal
+                          suggestion={suggestion}
+                          maxParticipants={event.maxParticipants ?? 0}
+                          totalUniqueVoters={totalUniqueVoters}
+                        />
+                      </div>
                     </div>
+                    {uniqueVoters.length > 0 ? (
+                      <ul className="flex justify-center gap-2">
+                        {uniqueVoters.map(voter => (
+                          <li key={voter}>
+                            <Shield>
+                              {voter.substring(0, 2).toUpperCase()}
+                            </Shield>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
                   </div>
                 );
               })}
